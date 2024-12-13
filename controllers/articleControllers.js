@@ -26,12 +26,8 @@ const addArticle = async (req, res) => {
 }
 
 const updateArticle = async (req, res) => {
-  const { error } = articleUpdateSchema.validate(req.body)
-  if (error) {
-    throw HttpError(400, error.message)
-  }
   const { id } = req.params
-  const result = await articlesServices.updateArticleById(id)
+  const result = await articlesServices.updateArticleById(id, req.body)
   if (!result)
     throw HttpError(404, `Article with ID ${id} not found`)
   res.json(result)

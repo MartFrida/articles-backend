@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { handleSaveError, setUpdateSettings } from "./hooks.js";
 
 const articleSchema = new Schema({
   title: {
@@ -24,6 +25,12 @@ const articleSchema = new Schema({
     required: [true, 'Why no tags? Tags may be Java, JS, Ruby, Python.'],
   },
 }, { versionKey: false, timestamps: true })
+
+articleSchema.post('save', handleSaveError)
+
+articleSchema.pre('findOneAndUpdate', setUpdateSettings)
+
+articleSchema.post('findOneAndUpdate', handleSaveError)
 
 const Article = model('article', articleSchema)
 

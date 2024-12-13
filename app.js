@@ -3,9 +3,7 @@ import cors from 'cors';
 import morgan from "morgan";
 import articlesRouter from "./routes/articleRouter.js";
 import mongoose from "mongoose";
-import dotenv from 'dotenv';
-
-dotenv.config();
+import 'dotenv/config';
 
 const app = express();
 app.use(morgan('tiny'))

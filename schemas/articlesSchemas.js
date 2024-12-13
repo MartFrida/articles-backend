@@ -1,13 +1,15 @@
 import Joi from 'joi'
 
 export const articleAddSchema = Joi.object({
-  "title": Joi.string().required(),
-  "author": Joi.string().required(),
-  "description": Joi.string().required(),
+  title: Joi.string().required(),
+  author: Joi.string().required(),
+  description: Joi.string().required(),
+  tags: Joi.string().valid('Java', 'JS', 'Ruby', 'Python').required(),
 })
 
 export const articleUpdateSchema = Joi.object({
-  "title": Joi.string(),
-  "author": Joi.string(),
-  "description": Joi.string(),
+  title: Joi.string(),
+  author: Joi.string(),
+  description: Joi.string(),
+  tags: Joi.string().valid("Java", "JS", "Ruby", "Python"),
 })
