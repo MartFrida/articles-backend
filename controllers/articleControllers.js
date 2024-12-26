@@ -1,6 +1,5 @@
 import * as articlesServices from '../services/articlesServices.js'
 import HttpError from '../helpers/HttpError.js'
-import { articleAddSchema, articleUpdateSchema } from '../schemas/articlesSchemas.js'
 import ctrlWrapper from '../decorators/ctrlWrapper.js'
 
 const getAllArticles = async (req, res) => {
@@ -17,10 +16,6 @@ const getArticleById = async (req, res) => {
 }
 
 const addArticle = async (req, res) => {
-  // const { error } = articleAddSchema.validate(req.body)
-  // if (error) {
-  //   throw HttpError(400, error.message)
-  // }
   const result = await articlesServices.addArticle(req.body)
   res.status(201).json(result)
 }
