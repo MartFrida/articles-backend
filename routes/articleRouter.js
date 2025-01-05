@@ -6,6 +6,7 @@ import isValidId from '../middlewares/isValidId.js'
 import authtenticate from '../middlewares/authtenticate.js'
 
 const articlesRouter = express.Router()
+
 articlesRouter.use(authtenticate)
 
 articlesRouter.get('/', articleControllers.getAllArticles)
