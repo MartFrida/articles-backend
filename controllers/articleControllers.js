@@ -3,14 +3,27 @@ import HttpError from '../helpers/HttpError.js'
 import ctrlWrapper from '../decorators/ctrlWrapper.js'
 
 const getAllArticles = async (req, res) => {
-  const result = await articlesServices.getAllArticles();
-  res.json(result)
+  const { page = 1, limit = 5 } = req.query
+  const skip = (page - 1) * limit
+  const result = await articlesServices.getAllArticles(skip, limit);
+  const total = await articlesServices.getArticlesCountByFilter()
+  // console.log(total)
+  res.json({
+    total,
+    result,
+  })
 }
 
 const getAllArticlesByOwner = async (req, res) => {
   const { _id: owner } = req.user
-  const result = await articlesServices.getArticlesByFilter({ owner })
-  res.json(result)
+  const { page = 1, limit = 5 } = req.query
+  const skip = (page - 1) * limit
+  const result = await articlesServices.getArticlesByFilter({ owner }, { skip, limit })
+  const total = await articlesServices.getArticlesCountByFilter({ owner })
+  res.json({
+    total,
+    result,
+  })
 }
 
 const getArticleById = async (req, res) => {
