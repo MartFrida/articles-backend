@@ -44,7 +44,27 @@ const signin = async (req, res) => {
   })
 }
 
+const getCurrent = async (req, res) => {
+  const { email, username } = req.user
+
+  res.json({
+    email,
+    username,
+  })
+}
+
+const signout = async (req, res) => {
+  const { _id } = req.user
+  await authServices.setToken(_id)
+
+  res.json({
+    message: 'Signout success'
+  })
+}
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
+  getCurrent: ctrlWrapper(getCurrent),
+  signout: ctrlWrapper(signout),
 }

@@ -18,6 +18,9 @@ const userSchema = new Schema({
     required: true,
     minlenth: 6,
   },
+  token: {
+    type: String,
+  },
 }, { versionKey: false, timestamps: true })
 
 userSchema.post('save', handleSaveError)

@@ -8,16 +8,16 @@ const { JWT_SECRET } = process.env
 const authtenticate = async (req, res, next) => {
   const { authorization } = req.headers
   const [bearer, token] = authorization.split(" ")
-  console.log(token)
+
   if (bearer !== "Bearer") {
     return next(HttpError(401))
   }
   try {
     const { id } = jwt.verify(token, JWT_SECRET)
-    console.log("id = ", id)
+
     const user = await findUserById(id)
 
-    if (!user) {
+    if (!user || !user.token) {
       return next(HttpError(401))
     }
     req.user = user;
