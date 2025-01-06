@@ -24,6 +24,12 @@ const articleSchema = new Schema({
     enum: ['Java', 'JS', 'Ruby', 'Python'],
     required: [true, 'Why no tags? Tags may be Java, JS, Ruby, Python.'],
   },
+  owner:
+  {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+    required: true,
+  },
 }, { versionKey: false, timestamps: true })
 
 articleSchema.post('save', handleSaveError)

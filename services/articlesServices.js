@@ -2,10 +2,14 @@ import Article from "../models/Article.js";
 
 export const getAllArticles = () => Article.find({})
 
-export const getArticleById = async (id) => Article.findById(id)
+export const getArticlesByFilter = (filter) => Article.find(filter, '-createdAt -updatedAt')
 
-export const addArticle = async (data) => Article.create(data)
+export const getArticleById = (id) => Article.findById(id)
 
-export const updateArticleById = async (id, data) => Article.findByIdAndUpdate(id, data, { new: true, runValidators: true })
+export const addArticle = (data) => Article.create(data)
 
-export const deleteArticleById = async (id) => Article.findByIdAndDelete(id)
+export const updateArticleByFilter = (filter, data) => Article.findOneAndUpdate(filter, data, { new: true, runValidators: true })
+
+export const deleteArticleById = (id) => Article.findByIdAndDelete(id)
+
+export const deleteArticleByfilter = filter => Article.findOneAndDelete(filter)

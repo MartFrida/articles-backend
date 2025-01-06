@@ -7,16 +7,16 @@ import authtenticate from '../middlewares/authtenticate.js'
 
 const articlesRouter = express.Router()
 
-articlesRouter.use(authtenticate)
-
 articlesRouter.get('/', articleControllers.getAllArticles)
 
 articlesRouter.get('/:id', isValidId, articleControllers.getArticleById)
 
-articlesRouter.post('/', validateBody(articleAddSchema), articleControllers.addArticle)
+articlesRouter.get('/owner/:id', authtenticate, articleControllers.getAllArticlesByOwner)
 
-articlesRouter.put('/:id', isValidId, validateBody(articleUpdateSchema), articleControllers.updateArticle)
+articlesRouter.post('/', authtenticate, validateBody(articleAddSchema), articleControllers.addArticle)
 
-articlesRouter.delete('/:id', isValidId, articleControllers.deleteArticle)
+articlesRouter.put('/:id', authtenticate, isValidId, validateBody(articleUpdateSchema), articleControllers.updateArticle)
+
+articlesRouter.delete('/:id', authtenticate, isValidId, articleControllers.deleteArticle)
 
 export default articlesRouter;
