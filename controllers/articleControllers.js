@@ -1,6 +1,10 @@
 import * as articlesServices from '../services/articlesServices.js'
 import HttpError from '../helpers/HttpError.js'
 import ctrlWrapper from '../decorators/ctrlWrapper.js'
+import fs from 'fs/promises'
+import path from 'path'
+
+const articlesDir = path.resolve('public', 'articles')
 
 const getAllArticles = async (req, res) => {
   const { page = 1, limit = 5 } = req.query
@@ -35,8 +39,13 @@ const getArticleById = async (req, res) => {
 }
 
 const addArticle = async (req, res) => {
+  const { path: oldPath, filename } = req.file
+  const newPath = path.join(articlesDir, filename)
+  await fs.rename(oldPath, newPath)
+  console.log(newPath)
+  const photo = path.join('articles', filename)
   const { _id: owner } = req.user
-  const result = await articlesServices.addArticle({ ...req.body, owner })
+  const result = await articlesServices.addArticle({ ...req.body, photo, owner })
   res.status(201).json(result)
 }
 

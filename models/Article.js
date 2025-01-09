@@ -24,6 +24,10 @@ const articleSchema = new Schema({
     enum: ['Java', 'JS', 'Ruby', 'Python'],
     required: [true, 'Why no tags? Tags may be Java, JS, Ruby, Python.'],
   },
+  photo: {
+    type: String,
+    required: true,
+  },
   owner:
   {
     type: Schema.Types.ObjectId,
