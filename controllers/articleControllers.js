@@ -1,17 +1,13 @@
 import * as articlesServices from '../services/articlesServices.js'
 import HttpError from '../helpers/HttpError.js'
 import ctrlWrapper from '../decorators/ctrlWrapper.js'
-import fs from 'fs/promises'
-import path from 'path'
-
-const articlesDir = path.resolve('public', 'articles')
+import cloudinary from '../helpers/cloudinary.js'
 
 const getAllArticles = async (req, res) => {
   const { page = 1, limit = 5 } = req.query
   const skip = (page - 1) * limit
   const result = await articlesServices.getAllArticles(skip, limit);
   const total = await articlesServices.getArticlesCountByFilter()
-  // console.log(total)
   res.json({
     total,
     result,
@@ -39,12 +35,11 @@ const getArticleById = async (req, res) => {
 }
 
 const addArticle = async (req, res) => {
-  const { path: oldPath, filename } = req.file
-  const newPath = path.join(articlesDir, filename)
-  await fs.rename(oldPath, newPath)
-  console.log(newPath)
-  const photo = path.join('articles', filename)
   const { _id: owner } = req.user
+  const { url: photo } = await cloudinary.uploader.upload(req.file.path, {
+    folder: 'articles'
+  })
+
   const result = await articlesServices.addArticle({ ...req.body, photo, owner })
   res.status(201).json(result)
 }
@@ -67,8 +62,6 @@ const deleteArticle = async (req, res) => {
   const result = await articlesServices.deleteArticleByfilter({ _id: id, owner })
   if (!result)
     throw HttpError(404, `Article with ID ${id} not found`)
-
-  // res.status(204).send()
 
   res.json({
     message: 'Delete success'
