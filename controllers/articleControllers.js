@@ -4,7 +4,7 @@ import ctrlWrapper from '../decorators/ctrlWrapper.js'
 import cloudinary from '../helpers/cloudinary.js'
 
 const getAllArticles = async (req, res) => {
-  const { page = 1, limit = 5 } = req.query
+  const { page = 1, limit = 11 } = req.query
   const skip = (page - 1) * limit
   const result = await articlesServices.getAllArticles(skip, limit);
   const total = await articlesServices.getArticlesCountByFilter()

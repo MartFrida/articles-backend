@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message })
 })
 
-console.log(process.env.DB_HOST)
+
 const { DB_HOST, PORT = 3001 } = process.env
 
 mongoose.connect(DB_HOST)
