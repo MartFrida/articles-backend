@@ -8,7 +8,10 @@ import authRouter from "./routes/authRouter.js";
 
 const app = express();
 app.use(morgan('tiny'))
-app.use(cors())
+app.use(cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}))
 app.use(express.json())
 app.use(express.static('public'))
 
