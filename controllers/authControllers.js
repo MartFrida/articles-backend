@@ -16,7 +16,7 @@ const signup = async (req, res) => {
   const newUser = await authServices.signup(req.body)
 
   res.status(201).json({
-    esername: newUser.username,
+    username: newUser.username,
     email: newUser.email,
     password: newUser.password,
   })
