@@ -32,15 +32,18 @@ const signin = async (req, res) => {
   if (!passwordCompare) {
     throw HttpError(401, "Email or password invalid")
   }
-
   const payload = {
     id: user._id,
+    username: user.username,
+    email: user.email
   }
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" })
   await authServices.setToken(user._id, token)
 
   res.json({
     token,
+    username: user.username,
+    email: user.email,
   })
 }
 
