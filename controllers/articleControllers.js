@@ -36,11 +36,11 @@ const getArticleById = async (req, res) => {
 
 const addArticle = async (req, res) => {
   const { _id: owner } = req.user
-  const { url: photo } = await cloudinary.uploader.upload(req.file.path, {
-    folder: 'articles'
-  })
+  // const { url: photo } = await cloudinary.uploader.upload(req.file.path, {
+  //   folder: 'articles'
+  // })
 
-  const result = await articlesServices.addArticle({ ...req.body, photo, owner })
+  const result = await articlesServices.addArticle({ ...req.body, owner })
   res.status(201).json(result)
 }
 
