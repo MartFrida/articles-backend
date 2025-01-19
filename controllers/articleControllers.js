@@ -39,7 +39,7 @@ const addArticle = async (req, res) => {
   // const { url: photo } = await cloudinary.uploader.upload(req.file.path, {
   //   folder: 'articles'
   // })
-
+  console.log(req.body)
   const result = await articlesServices.addArticle({ ...req.body, owner })
   res.status(201).json(result)
 }

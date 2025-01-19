@@ -21,8 +21,8 @@ const articleSchema = new Schema({
   tags:
   {
     type: String,
-    enum: ['Java', 'JS', 'Ruby', 'Python'],
-    required: [true, 'Why no tags? Tags may be Java, JS, Ruby, Python.'],
+    enum: ['Relax', 'Mind', 'Body', 'Salud'],
+    // required: [true, 'Why no tags? Tags may be Java, JS, Ruby, Python.'],
   },
   photo: {
     type: String,
